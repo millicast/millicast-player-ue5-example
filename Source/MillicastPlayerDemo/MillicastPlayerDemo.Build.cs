@@ -8,7 +8,7 @@ public class MillicastPlayerDemo : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "MillicastPlayer" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "MillicastPlayer", "WebRTC" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 	}
