@@ -1,7 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "MyMillicastActor.h"
+#include "MillicastAudioActor.h"
+#include "MillicastTexture2DPlayer.h"
+
+#include "Components/MillicastAudioComponent.h"
+#include "Components/MillicastDirectorComponent.h"
+#include "Components/MillicastSubscriberComponent.h"
 
 // Sets default values
 AMyMillicastActor::AMyMillicastActor()
@@ -25,7 +30,7 @@ void AMyMillicastActor::OnAudioTrack(UMillicastAudioTrack* AudioTrack)
 {
 	if (IsValid(AudioTrack))
 	{
-		AudioTrack->AddConsumer(MillicastAudioComponent);
+		AudioTrack->AddConsumer(MillicastAudioComponent->MillicastAudioComponent);
 	}
 	else
 	{
@@ -57,10 +62,3 @@ void AMyMillicastActor::BeginPlay()
 
 	MillicastDirector->Authenticate();
 }
-
-// Called every frame
-void AMyMillicastActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
