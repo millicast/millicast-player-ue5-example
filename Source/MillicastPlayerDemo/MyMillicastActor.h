@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Millicast 2022. All Rights Reserved.
 
 #pragma once
 
@@ -7,6 +7,7 @@
 
 class AMillicastAudioActor;
 class UMillicastMediaSource;
+struct FMillicastSignalingData;
 class UMillicastDirectorComponent;
 class UMillicastSubscriberComponent;
 class UMillicastTexture2DPlayer;
@@ -16,13 +17,17 @@ class MILLICASTPLAYERDEMO_API AMyMillicastActor : public AActor
 {
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Audio Consumer", AllowPrivateAccess = true))
-	AMillicastAudioActor* MillicastAudioComponent;
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Audio Consumer"))
+	TArray<AMillicastAudioActor*> AudioConsumerActors;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Media Source", AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Audio Consumer"))
+	TArray<UAudioComponent*> AudioConsumers;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Media Source"))
 	UMillicastMediaSource* MillicastMediaSource;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Texture Player", AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Texture Player"))
 	UMillicastTexture2DPlayer* MillicastTexturePlayer;
 
 	UPROPERTY()
@@ -36,7 +41,7 @@ public:
 	AMyMillicastActor();
 
 	UFUNCTION()
-	void OnAuthenticated(const FMillicastSignalingData& SignalingData);
+	void OnAuthenticated(UMillicastDirectorComponent* DirectorComponent, const FMillicastSignalingData& SignalingData);
 
 	UFUNCTION()
 	void OnAudioTrack(UMillicastAudioTrack * AudioTrack);

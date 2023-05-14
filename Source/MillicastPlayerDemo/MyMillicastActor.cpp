@@ -1,12 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MyMillicastActor.h"
-#include "MillicastAudioActor.h"
 #include "MillicastTexture2DPlayer.h"
+#include "Audio/MillicastAudioActor.h"
 
-#include "Components/MillicastAudioComponent.h"
+#include "Audio/MillicastAudioInstance.h"
 #include "Components/MillicastDirectorComponent.h"
 #include "Components/MillicastSubscriberComponent.h"
+#include "Subsystems/MillicastAudioSubsystem.h"
 
 // Sets default values
 AMyMillicastActor::AMyMillicastActor()
@@ -21,20 +22,39 @@ AMyMillicastActor::AMyMillicastActor()
 	AddOwnedComponent(MillicastSubscriber);
 }
 
-void AMyMillicastActor::OnAuthenticated(const FMillicastSignalingData& SignalingData)
+void AMyMillicastActor::OnAuthenticated(UMillicastDirectorComponent* DirectorComponent, const FMillicastSignalingData& SignalingData)
 {
-	MillicastSubscriber->Subscribe(SignalingData, nullptr);
+	MillicastSubscriber->Subscribe(DirectorComponent, SignalingData);
 }
 
 void AMyMillicastActor::OnAudioTrack(UMillicastAudioTrack* AudioTrack)
 {
-	if (IsValid(AudioTrack))
+	if (!IsValid(AudioTrack))
 	{
-		AudioTrack->AddConsumer(MillicastAudioComponent->MillicastAudioComponent);
+		return;
 	}
-	else
+
+	if(AudioConsumers.Num() == 0 && AudioConsumerActors.Num() == 0)
 	{
-		
+		UE_LOG(LogTemp, Error, TEXT("[AMyMillicastActor::OnAudioTrack] No valid audio consumers assigned"));
+		return;
+	}
+
+	auto* Subsystem = GetGameInstance()->GetSubsystem<UMillicastAudioSubsystem>();
+	auto RegisterAudioComponent = [=](UAudioComponent* AudioComponent)
+	{
+		Subsystem->Register(AudioComponent);
+		AudioTrack->AddConsumer(Subsystem->GetInstance(AudioComponent));
+	};
+	
+	for(const auto* Consumer : AudioConsumerActors)
+	{
+		RegisterAudioComponent(Consumer->AudioComponent);
+	}
+
+	for(auto* AudioComponent : AudioConsumers)
+	{
+		RegisterAudioComponent(AudioComponent);
 	}
 }
 
