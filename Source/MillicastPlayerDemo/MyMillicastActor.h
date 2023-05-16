@@ -43,15 +43,6 @@ public:
 	UFUNCTION()
 	void OnAuthenticated(UMillicastDirectorComponent* DirectorComponent, const FMillicastSignalingData& SignalingData);
 
-	UFUNCTION()
-	void OnAudioTrack(UMillicastAudioTrack * AudioTrack);
-
-	UFUNCTION()
-	void OnVideoTrack(UMillicastVideoTrack * VideoTrack);
-
-	UFUNCTION()
-	void OnSubscribed();
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
