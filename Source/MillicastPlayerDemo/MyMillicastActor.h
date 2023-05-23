@@ -3,11 +3,11 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "MillicastSignalingData.h"
 #include "MyMillicastActor.generated.h"
 
 class AMillicastAudioActor;
 class UMillicastMediaSource;
-struct FMillicastSignalingData;
 class UMillicastDirectorComponent;
 class UMillicastSubscriberComponent;
 class UMillicastTexture2DPlayer;
