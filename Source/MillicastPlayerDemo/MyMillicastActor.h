@@ -8,6 +8,7 @@
 
 class AMillicastAudioActor;
 class UMillicastMediaSource;
+class IMillicastVideoConsumer;
 class UMillicastDirectorComponent;
 class UMillicastSubscriberComponent;
 class UMillicastTexture2DPlayer;
@@ -18,11 +19,14 @@ class MILLICASTPLAYERDEMO_API AMyMillicastActor : public AActor
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Audio Consumer"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Audio Consumers (MillicastActor)"))
 	TArray<AMillicastAudioActor*> AudioConsumerActors;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Audio Consumer"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Audio Consumers (ActorComponent)"))
 	TArray<UAudioComponent*> AudioConsumers;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Video Consumers"))
+	TArray<TScriptInterface<IMillicastVideoConsumer>> VideoConsumers;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Properties", META = (DisplayName = "Millicast Media Source"))
 	UMillicastMediaSource* MillicastMediaSource;

@@ -42,6 +42,11 @@ void AMyMillicastActor::BeginPlay()
 	{
 		MillicastSubscriber->RegisterAudioComponent(AudioComponent);
 	}
+
+	for(const auto& Consumer : VideoConsumers)
+	{
+		MillicastSubscriber->RegisterVideoConsumer(Consumer);
+	}
 	
 	MillicastDirector->Authenticate();
 }
