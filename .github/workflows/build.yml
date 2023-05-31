@@ -1,7 +1,6 @@
 name: Build_Unreal_Plugin_Example
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 env:
   CPP_SDK_TAG: "2.4.2"
